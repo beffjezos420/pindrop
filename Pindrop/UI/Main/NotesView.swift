@@ -323,6 +323,13 @@ struct NotesView: View {
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
+                Text(wordCountLabel(for: note.content.wordCount))
+                    .font(AppTypography.label)
+                    .foregroundStyle(AppColors.textTertiary)
+                    .lineLimit(1)
+                    .multilineTextAlignment(.trailing)
+                    .frame(width: 64, alignment: .trailing)
+
                 Text(dateText)
                     .font(AppTypography.label)
                     .foregroundStyle(AppColors.textTertiary)
@@ -381,6 +388,16 @@ struct NotesView: View {
 
     private func localizedSectionTitle(_ key: NotesGrouping.SectionKey) -> String {
         localized(key.localizationKey, locale: locale)
+    }
+
+    /// Localized word-count readout for a note's content, matching the editor footer's
+    /// singular/plural phrasing (`"1 word"` / `"%d words"`).
+    private func wordCountLabel(for count: Int) -> String {
+        if count == 1 {
+            return localized("1 word", locale: locale)
+        }
+        let format = localized("%d words", locale: locale)
+        return String(format: format, locale: locale, count)
     }
 
     // MARK: - Actions
