@@ -24,4 +24,19 @@ extension String {
         }
         return count
     }
+
+    /// Number of newline-delimited lines.
+    ///
+    /// Single linear scan — no intermediate `split` array.
+    /// Empty strings yield 0; strings without newlines yield 1.
+    var lineCount: Int {
+        guard !self.isEmpty else { return 0 }
+        var count = 1
+        for character in self {
+            if character.isNewline {
+                count += 1
+            }
+        }
+        return count
+    }
 }
