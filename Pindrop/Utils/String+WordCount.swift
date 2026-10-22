@@ -39,4 +39,18 @@ extension String {
         }
         return count
     }
+
+    /// Number of grapheme clusters (visible characters), excluding whitespace
+    /// and newline characters.
+    ///
+    /// Single linear scan — no intermediate array allocations.
+    var nonWhitespaceCharacterCount: Int {
+        var count = 0
+        for character in self {
+            if !character.isWhitespace && !character.isNewline {
+                count += 1
+            }
+        }
+        return count
+    }
 }
