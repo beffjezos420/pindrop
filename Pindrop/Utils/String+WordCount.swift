@@ -53,4 +53,24 @@ extension String {
         }
         return count
     }
+
+    /// Number of sentences, delimited by `.`, `!`, or `?` followed by
+    /// whitespace or end of string.
+    ///
+    /// Single linear scan — no intermediate `split` array.
+    /// Empty strings yield 0; strings without sentence-ending punctuation
+    /// yield 1 if non-empty (a single implicit sentence).
+    var sentenceCount: Int {
+        guard !self.isEmpty else { return 0 }
+        var count = 1
+        for var i = 0; i < self.count; i += 1 {
+            let character = self[i]
+            if character == "." || character == "!" || character == "?" {
+                if i + 1 >= self.count || self[i + 1].isWhitespace || self[i + 1].isNewline {
+                    count += 1
+                }
+            }
+        }
+        return count
+    }
 }
